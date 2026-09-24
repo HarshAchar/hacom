@@ -5,8 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Harsh Achar</title>
   <meta name="description" content="Personal website of Harsh Achar">
+
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -56,11 +59,17 @@
     }
 
     a {
+      color: #161616;
       text-decoration: none;
     }
 
-    .page { display: none; }
-    .page.active { display: block; }
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
   </style>
 </head>
 
@@ -73,16 +82,18 @@
   <main>
     <section id="home" class="page active">
       <h1>Harsh Achar</h1>
-      <p>ASP .NET Developer</p>
+      <p>ASP.NET Developer</p>
     </section>
 
     <section id="contact" class="page">
       <h1>Get in touch!</h1>
       <p>
         <strong>
-          <a href="mailto:contact@harshachar.com"
-           onclick="fetch('/track?event=email', { keepalive: true })">
-           contact@harshachar.com
+          <a
+            href="mailto:contact@harshachar.com"
+            onclick="track('email')"
+          >
+            contact@harshachar.com
           </a>
         </strong>
       </p>
@@ -90,9 +101,16 @@
   </main>
 
   <script>
+    function track(event) {
+      navigator.sendBeacon(
+        `/track?event=${encodeURIComponent(event)}`
+      );
+    }
+
     function showPage(pageName) {
-      if (pageName === 'contact')
-      {fetch('/track?event=contact', { keepalive: true });}
+      if (pageName === 'contact') {
+        track('contact');
+      }
 
       document.querySelectorAll('.page').forEach(page => {
         page.classList.remove('active');
